@@ -12,6 +12,7 @@ import org.nutz.mvc.ioc.provider.ComboIocProvider;
         "*tx", // 事务拦截 aop
         "*async"}) // 异步执行aop
 @Modules()
+@Fail("jsp:jsp.500")
 public class MainModule {
 
     @At("/register")
