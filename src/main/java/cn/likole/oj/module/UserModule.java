@@ -5,12 +5,11 @@ import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
-import org.nutz.lang.meta.Email;
 import org.nutz.lang.util.NutMap;
-import org.nutz.mvc.WhaleFilter;
 import org.nutz.mvc.annotation.*;
 import org.nutz.mvc.filter.CrossOriginFilter;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -59,7 +58,7 @@ public class UserModule {
 
     @At
     @POST
-    public Object register(@Param("..")User user){
+    public Object register(@Param("..")User user, HttpSession session){
         NutMap re=new NutMap();
 
         //检查邮箱密码格式
@@ -72,23 +71,50 @@ public class UserModule {
 
         //检查邮箱和昵称是否重复
         List<User> users= dao.query(User.class, Cnd.where("email","=",user.getEmail()).or("nickname","=",user.getNickname()));
-        if(users.size()!=0 ) return re.setv("ok",false).setv("msg","该邮箱已被注册");
+        if(users.size()!=0 ) return re.setv("ok",false).setv("msg","该邮箱或昵称已被注册");
 
         //注册
         user.setMoney(0);
         user.setState(0);
         dao.insert(user);
 
+        //登陆
+        session.setAttribute("uid",user.getId());
+        session.setAttribute("nickname",user.getNickname());
+        session.setAttribute("state",user.getState());
+
         return re.setv("ok",true);
     }
 
     @At
-    public Object login(){
+    @POST
+    public Object login(@Param("..")User user,HttpSession session){
+        NutMap re=new NutMap();
+
+        //检查邮箱密码格式
+        String msg=checkEmailAndPassword(user);
+        if(msg!=null) return re.setv("ok",false).setv("msg",msg);
+
+        //检查用户是否存在
+        List<User> users=dao.query(User.class,Cnd.where("email","=",user.getEmail()).and("password","=",user.getPassword()));
+        if(users.size()==0) return re.setv("ok",false).setv("msg","用户名或密码错误");
+
+        //登陆
+        session.setAttribute("uid",users.get(0).getId());
+        session.setAttribute("nickname",users.get(0).getNickname());
+        session.setAttribute("state",user.getState());
+
+        return re.setv("ok",false);
+    }
+
+    @At
+    public Object loginPage(){
         return null;
     }
 
     @At
-    public Object logout(){
-        return null;
+    @Ok(">>:/user/loginpage")
+    public void logout(HttpSession session){
+        session.invalidate();
     }
 }
