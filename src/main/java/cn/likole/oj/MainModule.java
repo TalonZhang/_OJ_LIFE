@@ -1,5 +1,7 @@
 package cn.likole.oj;
 
+import cn.likole.oj.bean.User;
+import org.nutz.lang.util.NutMap;
 import org.nutz.mvc.annotation.*;
 import org.nutz.mvc.ioc.provider.ComboIocProvider;
 
@@ -14,11 +16,5 @@ import org.nutz.mvc.ioc.provider.ComboIocProvider;
 @Modules()
 @Fail("jsp:jsp.500")
 public class MainModule {
-
-    @At("/register")
-    @Ok("json")
-    public String dolala(@Param("username") String username){
-        return "馬鹿"+username;
-    }
 
 }
