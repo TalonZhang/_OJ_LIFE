@@ -43,16 +43,16 @@ public class UserModule {
     public Object checkEmail(@Param("email") String email){
         NutMap re=new NutMap();
         List<User> users= dao.query(User.class, Cnd.where("email","=",email));
-        if(users.size()!=0) return re.setv("ok",false).setv("msg","该邮箱已被注册");
-        return re.setv("ok",true);
+        if(users.size()!=0) return re.setv("ok",false).setv("msg","该邮箱已被注册").setv("valid",false);
+        return re.setv("ok",true).setv("valid",true);
     }
 
     @At
     public Object checkNickname(@Param("nickname") String nickname){
         NutMap re=new NutMap();
         List<User> users= dao.query(User.class, Cnd.where("nickname","=",nickname));
-        if(users.size()!=0) return re.setv("ok",false).setv("msg","该昵称已被使用");
-        return re.setv("ok",true);
+        if(users.size()!=0) return re.setv("ok",false).setv("msg","该昵称已被使用").setv("valid",false);
+        return re.setv("ok",true).setv("valid",true);
     }
 
     @At
@@ -78,6 +78,7 @@ public class UserModule {
         dao.insert(user);
 
         //登陆
+        session.invalidate();
         session.setAttribute("uid",user.getId());
         session.setAttribute("nickname",user.getNickname());
         session.setAttribute("state"+user.getState(),1);
@@ -99,6 +100,7 @@ public class UserModule {
         if(users.size()==0) return re.setv("ok",false).setv("msg","用户名或密码错误");
 
         //登陆
+        session.invalidate();
         session.setAttribute("uid",users.get(0).getId());
         session.setAttribute("nickname",users.get(0).getNickname());
         session.setAttribute("state"+users.get(0).getState(),1);
