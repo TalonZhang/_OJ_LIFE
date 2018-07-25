@@ -39,10 +39,19 @@ public class User {
     @Column
     private int submit;
 
-    @One(field="id")
-    private UserTutorialInfo userTutorialInfo;
+    @Column
+    private int tutorialId;
 
-    @One(field = "id")
+    @Column
+    private int userId;
+
+//    @One(field = "tutorialId", key = "id")
+//    private UserTutorialInfo userTutorialInfo;
+
+    @One(field = "tutorialId",key = "id")
+    private Tutorial tutorial;
+
+    @One(field = "userId", key = "id")
     private UserInfo userInfo;
 
     public int getId() {
@@ -109,12 +118,12 @@ public class User {
         this.state = state;
     }
 
-    public UserTutorialInfo getUserTutorialInfo() {
-        return userTutorialInfo;
+    public Tutorial getTutorial() {
+        return tutorial;
     }
 
-    public void setUserTutorialInfo(UserTutorialInfo userTutorialInfo) {
-        this.userTutorialInfo = userTutorialInfo;
+    public void setTutorial(Tutorial tutorial) {
+        this.tutorial = tutorial;
     }
 
     public UserInfo getUserInfo() {
@@ -139,5 +148,21 @@ public class User {
 
     public void setSubmit(int submit) {
         this.submit = submit;
+    }
+
+    public int getTutorialId() {
+        return tutorialId;
+    }
+
+    public void setTutorialId(int tutorialId) {
+        this.tutorialId = tutorialId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

@@ -1044,53 +1044,61 @@ pid</ColNames>
       <Position>10</Position>
       <DataType>int(32)|0</DataType>
     </column>
-    <index id="242" parent="37" name="email">
+    <column id="242" parent="37" name="tutorialId">
+      <Position>11</Position>
+      <DataType>int(32)|0</DataType>
+    </column>
+    <column id="243" parent="37" name="userId">
+      <Position>12</Position>
+      <DataType>int(32)|0</DataType>
+    </column>
+    <index id="244" parent="37" name="email">
       <ColNames>email</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="243" parent="37" name="PRIMARY">
+    <key id="245" parent="37" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="244" parent="37" name="email">
+    <key id="246" parent="37" name="email">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>email</UnderlyingIndexName>
     </key>
-    <column id="245" parent="38" name="id">
+    <column id="247" parent="38" name="id">
       <Position>1</Position>
       <DataType>int(32)|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <column id="246" parent="38" name="title">
+    <column id="248" parent="38" name="title">
       <Position>2</Position>
       <DataType>varchar(128)|0</DataType>
     </column>
-    <column id="247" parent="38" name="level">
+    <column id="249" parent="38" name="level">
       <Position>3</Position>
       <DataType>int(32)|0</DataType>
     </column>
-    <column id="248" parent="38" name="exp">
+    <column id="250" parent="38" name="exp">
       <Position>4</Position>
       <DataType>int(32)|0</DataType>
     </column>
-    <key id="249" parent="38" name="PRIMARY">
+    <key id="251" parent="38" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="250" parent="39" name="id">
+    <column id="252" parent="39" name="id">
       <Position>1</Position>
       <DataType>int(32)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="251" parent="39" name="tutorial_id">
+    <column id="253" parent="39" name="tutorial_id">
       <Position>2</Position>
       <DataType>int(32)|0</DataType>
     </column>
-    <key id="252" parent="39" name="PRIMARY">
+    <key id="254" parent="39" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
