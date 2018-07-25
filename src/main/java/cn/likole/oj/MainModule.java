@@ -6,6 +6,8 @@ import org.nutz.mvc.annotation.*;
 import org.nutz.mvc.filter.CrossOriginFilter;
 import org.nutz.mvc.ioc.provider.ComboIocProvider;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Created by likole on 7/23/18.
  */
@@ -18,5 +20,13 @@ import org.nutz.mvc.ioc.provider.ComboIocProvider;
 @Fail("jsp:jsp.500")
 @Filters(@By(type = CrossOriginFilter.class))
 public class MainModule {
+
+    @At("/")
+    @Ok("re")
+    public String index(HttpSession session){
+        if(session.getAttribute("uid")==null) return ">>:/user/loginpage";
+        if(session.getAttribute("state0")!=null) return ">>:/tutorial/test0";
+        return "jsp:500";
+    }
 
 }

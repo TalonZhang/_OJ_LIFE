@@ -78,9 +78,10 @@ public class UserModule {
         dao.insert(user);
 
         //登陆
-        session.invalidate();
         session.setAttribute("uid",user.getId());
         session.setAttribute("nickname",user.getNickname());
+        session.removeAttribute("state0");
+        session.removeAttribute("state1");
         session.setAttribute("state"+user.getState(),1);
 
         return re.setv("ok",true);
@@ -100,9 +101,10 @@ public class UserModule {
         if(users.size()==0) return re.setv("ok",false).setv("msg","用户名或密码错误");
 
         //登陆
-        session.invalidate();
         session.setAttribute("uid",users.get(0).getId());
         session.setAttribute("nickname",users.get(0).getNickname());
+        session.removeAttribute("state0");
+        session.removeAttribute("state1");
         session.setAttribute("state"+users.get(0).getState(),1);
 
         return re.setv("ok",true);
@@ -112,7 +114,7 @@ public class UserModule {
     @Ok("re")
     public String loginPage(HttpSession session){
         if(session.getAttribute("uid")!=null) return ">>:/";
-        return "jsp:/jsp.loginpage";
+        return "jsp:jsp.loginpage";
     }
 
     @At

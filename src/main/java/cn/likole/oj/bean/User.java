@@ -36,6 +36,7 @@ public class User {
     @Column
     private int solved;
 
+    @Column
     private int submit;
 
     @One(field="id")
@@ -122,5 +123,21 @@ public class User {
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
+    }
+
+    public int getSolved() {
+        return solved;
+    }
+
+    public void setSolved(int solved) {
+        this.solved = solved;
+    }
+
+    public int getSubmit() {
+        return submit;
+    }
+
+    public void setSubmit(int submit) {
+        this.submit = submit;
     }
 }
