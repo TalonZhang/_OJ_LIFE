@@ -3,6 +3,7 @@ package cn.likole.oj.module;
 import cn.likole.oj.bean.User;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
+import org.nutz.http.Http;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.lang.util.NutMap;
@@ -18,8 +19,6 @@ import java.util.List;
 @IocBean
 @At("/user")
 @Ok("json:full")
-@Fail("jsp:jsp.500")
-@Filters(@By(type = CrossOriginFilter.class))
 public class UserModule {
 
     @Inject
@@ -81,7 +80,7 @@ public class UserModule {
         //登陆
         session.setAttribute("uid",user.getId());
         session.setAttribute("nickname",user.getNickname());
-        session.setAttribute("state",user.getState());
+        session.setAttribute("state"+user.getState(),1);
 
         return re.setv("ok",true);
     }
@@ -102,14 +101,16 @@ public class UserModule {
         //登陆
         session.setAttribute("uid",users.get(0).getId());
         session.setAttribute("nickname",users.get(0).getNickname());
-        session.setAttribute("state",user.getState());
+        session.setAttribute("state"+users.get(0).getState(),1);
 
-        return re.setv("ok",false);
+        return re.setv("ok",true);
     }
 
     @At
-    public Object loginPage(){
-        return null;
+    @Ok("re")
+    public String loginPage(HttpSession session){
+        if(session.getAttribute("uid")!=null) return ">>:/";
+        return "jsp:/jsp.loginpage";
     }
 
     @At

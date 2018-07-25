@@ -3,6 +3,7 @@ package cn.likole.oj;
 import cn.likole.oj.bean.User;
 import org.nutz.lang.util.NutMap;
 import org.nutz.mvc.annotation.*;
+import org.nutz.mvc.filter.CrossOriginFilter;
 import org.nutz.mvc.ioc.provider.ComboIocProvider;
 
 /**
@@ -15,6 +16,7 @@ import org.nutz.mvc.ioc.provider.ComboIocProvider;
         "*async"}) // 异步执行aop
 @Modules()
 @Fail("jsp:jsp.500")
+@Filters(@By(type = CrossOriginFilter.class))
 public class MainModule {
 
 }
