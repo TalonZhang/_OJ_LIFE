@@ -36,7 +36,7 @@ public class Problem {
     private String sampleOutput;
 
     @Column
-    @ColDefine(type = ColType.CHAR)
+    @ColDefine(type = ColType.CHAR,width = 1)
     private String spj;
 
     @Column

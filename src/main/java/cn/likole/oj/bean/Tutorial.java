@@ -29,7 +29,7 @@ public class Tutorial {
     @Column
     private boolean introduction;
 
-    @Many(field = "id")
+    @ManyMany(relation = "tutorial_problem",from = "tutorial_id",to="problem_id")
     private List<Problem> problems;
 
     public int getId() {

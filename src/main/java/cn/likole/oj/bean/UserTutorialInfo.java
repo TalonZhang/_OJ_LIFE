@@ -13,7 +13,7 @@ public class UserTutorialInfo {
     @Id
     private int id;
 
-    @Column
+    @Column("tutorial_id")
     private int tutorialId;
 
     public int getId() {
