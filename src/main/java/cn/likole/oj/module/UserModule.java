@@ -75,6 +75,7 @@ public class UserModule {
         //注册
         user.setMoney(0);
         user.setState(0);
+        user.setTutorialId(1);
         dao.insert(user);
 
         //登陆

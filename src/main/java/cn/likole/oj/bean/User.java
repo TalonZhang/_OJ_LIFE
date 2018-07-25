@@ -43,7 +43,7 @@ public class User {
     private int tutorialId;
 
     @Column
-    private int userId;
+    private int infoId;
 
 //    @One(field = "tutorialId", key = "id")
 //    private UserTutorialInfo userTutorialInfo;
@@ -51,7 +51,7 @@ public class User {
     @One(field = "tutorialId",key = "id")
     private Tutorial tutorial;
 
-    @One(field = "userId", key = "id")
+    @One(field = "infoId", key = "id")
     private UserInfo userInfo;
 
     public int getId() {
@@ -158,11 +158,11 @@ public class User {
         this.tutorialId = tutorialId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getInfoId() {
+        return infoId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setInfoId(int infoId) {
+        this.infoId = infoId;
     }
 }

@@ -15,7 +15,8 @@ public class MainSetup implements Setup {
     public void init(NutConfig nc) {
         Ioc ioc = nc.getIoc();
         Dao dao = ioc.get(Dao.class);
-        Daos.createTablesInPackage(dao, "cn.likole.oj", false);
+        Daos.createTablesInPackage(dao, "cn.likole.oj.bean", false);
+        Daos.migration(dao, "cn.likole.oj.bean", true, false, false);
     }
 
     public void destroy(NutConfig nc) {
