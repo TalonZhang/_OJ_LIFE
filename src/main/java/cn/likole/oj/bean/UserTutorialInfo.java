@@ -14,10 +14,7 @@ public class UserTutorialInfo {
     private int id;
 
     @Column
-    private int chapter;
-
-    @Column
-    private int section;
+    private int tutorialId;
 
     public int getId() {
         return id;
@@ -27,19 +24,11 @@ public class UserTutorialInfo {
         this.id = id;
     }
 
-    public int getChapter() {
-        return chapter;
+    public int getTutorialId() {
+        return tutorialId;
     }
 
-    public void setChapter(int chapter) {
-        this.chapter = chapter;
-    }
-
-    public int getSection() {
-        return section;
-    }
-
-    public void setSection(int section) {
-        this.section = section;
+    public void setTutorialId(int tutorialId) {
+        this.tutorialId = tutorialId;
     }
 }

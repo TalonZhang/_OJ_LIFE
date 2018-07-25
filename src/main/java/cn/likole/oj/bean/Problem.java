@@ -27,11 +27,11 @@ public class Problem {
     @ColDefine(type = ColType.TEXT)
     private String output;
 
-    @Column
+    @Column("sample_input")
     @ColDefine(type = ColType.TEXT)
     private String sampleInput;
 
-    @Column
+    @Column("sample_output")
     @ColDefine(type = ColType.TEXT)
     private String sampleOutput;
 
@@ -46,10 +46,10 @@ public class Problem {
     @Column
     private String source;
 
-    @Column
+    @Column("time_limit")
     private int timeLimit;
 
-    @Column
+    @Column("memory_limit")
     private int memoryLimit;
 
     @Column

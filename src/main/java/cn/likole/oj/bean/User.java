@@ -9,6 +9,7 @@ import org.nutz.dao.entity.annotation.*;
 public class User {
 
     @Id
+    @Column("user_id")
     private int id;
 
     @Name
@@ -31,6 +32,11 @@ public class User {
 
     @Column
     private int state;
+
+    @Column
+    private int solved;
+
+    private int submit;
 
     @One(field="id")
     private UserTutorialInfo userTutorialInfo;
