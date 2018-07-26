@@ -146,7 +146,7 @@ public class UserModule {
     @AdaptBy(type = UploadAdaptor.class, args = {"${app.root}/WEB-INF/tmp/user_avatar","8192","utf-8","20000","102400"})
     @POST
     @At("/avator")
-    public Object uploadAcatar(@Param("file")TempFile tf, @Param("userId")int id,AdaptorErrorContext err){
+    public Object uploadAcatar(@Param("file")TempFile tf, @Param("uid")int id,AdaptorErrorContext err){
         NutMap re=new NutMap();
         String msg=null;
         if(err!=null && err.getAdaptorErr()!=null){
@@ -176,12 +176,75 @@ public class UserModule {
         return re.setv("ok",true).setv("msg",msg);
     }
 
-
-    public Object readAvatar(@Param("user")int id, HttpServletRequest req)throws SQLException{
+    @At
+    @Ok("raw:jpg")
+    @GET
+    public Object readAvatar(@Param("uid")int id, HttpServletRequest req)throws SQLException{
         User user= Daos.ext(dao, FieldFilter.create(User.class,"^avatar$")).fetch(User.class,id);
         if(user==null || user.getAvatar()==null){
             return new File(req.getSession().getServletContext().getRealPath("/rs/user_avatar/none.jpg"));
         }
         return user.getAvatar();
     }
+
+
+    /**
+     * 更新信息部分
+     */
+    @At
+    public Object updatePassword(@Param("uid")int id,String password1,String password2){
+        User user= dao.fetch(User.class,id);
+        NutMap re=new NutMap();
+        if(password1!=password2)
+            return re.setv("ok",false).setv("msg","两次密码不一致");
+        user.setPassword(password1);
+        dao.update(user,"^password$");
+        return re.setv("ok",true);
+    }
+    @At
+    public Object updateNickname(@Param("uid")int id,@Param("nickname")String nickname){
+        User user= dao.fetch(User.class,id);
+        user.setNickname(nickname);
+        dao.update(user,"^nickname$");
+        NutMap re=new NutMap();
+        return re.setv("ok",true);
+    }
+
+    @At
+    public Object updateSid(@Param("uid")int id,@Param("sid")String sid){
+        User user= dao.fetch(User.class,id);
+        user.setSid(sid);
+        dao.update(user,"^sid$");
+        NutMap re=new NutMap();
+        return re.setv("ok",true);
+    }
+
+    @At
+    public Object updateQq(@Param("uid")int id,@Param("qq")String qq){
+        User user= dao.fetch(User.class,id);
+        user.setQq(qq);
+        dao.update(user,"^qq$");
+        NutMap re=new NutMap();
+        return re.setv("ok",true);
+    }
+
+    @At
+    public Object addMoney(@Param("uid")int id,@Param("money")int money,int num){
+        User user= dao.fetch(User.class,id);
+        user.setMoney(money+num);
+        dao.update(user,"^money$");
+        NutMap re=new NutMap();
+        return re.setv("ok",true);
+    }
+
+    @At
+    public Object decMoney(@Param("uid")int id,@Param("money")int money,int num){
+        User user= dao.fetch(User.class,id);
+        user.setMoney(money-num);
+        dao.update(user,"^money$");
+        NutMap re=new NutMap();
+        return re.setv("ok",true);
+    }
+
+
 }
