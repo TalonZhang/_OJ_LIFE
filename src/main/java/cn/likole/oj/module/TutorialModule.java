@@ -73,8 +73,23 @@ public class TutorialModule {
             return re.setv("ok",true);
         }
 
+        //todo:判断当前题目是否刷够
         return re.setv("ok",false);
 
     }
+
+    @At
+    public Object finish(HttpSession session){
+        NutMap re=new NutMap();
+
+        User user=dao.fetch(User.class,(int)session.getAttribute("uid"));
+        int maxIndex= dao.func(Tutorial.class,"max","id");
+
+        if(maxIndex!=user.getTutorialId()) return re.setv("ok",false).setv("msg","尚未到达最大章节");
+
+        //todo:判断当前题目是否刷够
+        return re.setv("ok",false);
+    }
+
 
 }
