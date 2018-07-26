@@ -1,6 +1,7 @@
 package cn.likole.oj.bean;
 
 import org.nutz.dao.entity.annotation.*;
+import org.nutz.json.JsonField;
 
 import java.util.Date;
 
@@ -52,6 +53,10 @@ public class User {
 
     @Column
     private int infoId;
+
+    @Column
+    @JsonField(ignore = true)
+    private byte[] avatar;
 
 //    @One(field = "tutorialId", key = "id")
 //    private UserTutorialInfo userTutorialInfo;
@@ -189,4 +194,9 @@ public class User {
     public void setTutorialFinishTime(Date tutorialFinishTime) {
         this.tutorialFinishTime = tutorialFinishTime;
     }
+
+
+    public byte[] getAvatar() { return avatar; }
+
+    public void setAvatar(byte[] avatar) { this.avatar = avatar; }
 }
