@@ -58,6 +58,9 @@ public class Solution {
     @Column("content_num")
     private int contestNum;
 
+    @One(field = "id",key = "solutionId")
+    private SourceCode sourceCode;
+
     public int getId() {
         return id;
     }
@@ -168,5 +171,13 @@ public class Solution {
 
     public void setContestNum(int contestNum) {
         this.contestNum = contestNum;
+    }
+
+    public SourceCode getSourceCode() {
+        return sourceCode;
+    }
+
+    public void setSourceCode(SourceCode sourceCode) {
+        this.sourceCode = sourceCode;
     }
 }
