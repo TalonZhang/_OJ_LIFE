@@ -2,6 +2,8 @@ package cn.likole.oj.bean;
 
 import org.nutz.dao.entity.annotation.*;
 
+import java.util.Date;
+
 /**
  * Created by likole on 7/23/18.
  */
@@ -41,6 +43,12 @@ public class User {
 
     @Column
     private int tutorialId;
+
+    @Column
+    private Date registerTime;
+
+    @Column
+    private Date tutorialFinishTime;
 
     @Column
     private int infoId;
@@ -164,5 +172,21 @@ public class User {
 
     public void setInfoId(int infoId) {
         this.infoId = infoId;
+    }
+
+    public Date getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
+    }
+
+    public Date getTutorialFinishTime() {
+        return tutorialFinishTime;
+    }
+
+    public void setTutorialFinishTime(Date tutorialFinishTime) {
+        this.tutorialFinishTime = tutorialFinishTime;
     }
 }

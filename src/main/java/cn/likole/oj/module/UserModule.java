@@ -11,6 +11,7 @@ import org.nutz.mvc.annotation.*;
 import org.nutz.mvc.filter.CrossOriginFilter;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -76,6 +77,7 @@ public class UserModule {
         user.setMoney(0);
         user.setState(0);
         user.setTutorialId(1);
+        user.setRegisterTime(new Date());
         dao.insert(user);
 
         //登陆
@@ -97,7 +99,7 @@ public class UserModule {
         String msg=checkEmailAndPassword(user);
         if(msg!=null) return re.setv("ok",false).setv("msg",msg);
 
-        //检查用户是否存在
+        //检查用户名密码
         List<User> users=dao.query(User.class,Cnd.where("email","=",user.getEmail()).and("password","=",user.getPassword()));
         if(users.size()==0) return re.setv("ok",false).setv("msg","用户名或密码错误");
 
