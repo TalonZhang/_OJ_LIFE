@@ -3,14 +3,30 @@ package cn.likole.oj.module;
 import cn.likole.oj.bean.User;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
+import org.nutz.dao.DaoException;
+import org.nutz.dao.FieldFilter;
+import org.nutz.dao.util.Daos;
 import org.nutz.http.Http;
+import org.nutz.img.Images;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.lang.util.NutMap;
+import org.nutz.mvc.Mvcs;
+import org.nutz.mvc.Scope;
 import org.nutz.mvc.annotation.*;
 import org.nutz.mvc.filter.CrossOriginFilter;
+import org.nutz.mvc.impl.AdaptorErrorContext;
+import org.nutz.mvc.upload.TempFile;
+import org.nutz.mvc.upload.UploadAdaptor;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -124,5 +140,48 @@ public class UserModule {
     @Ok(">>:/user/loginpage")
     public void logout(HttpSession session){
         session.invalidate();
+    }
+
+
+    @AdaptBy(type = UploadAdaptor.class, args = {"${app.root}/WEB-INF/tmp/user_avatar","8192","utf-8","20000","102400"})
+    @POST
+    @At("/avator")
+    public Object uploadAcatar(@Param("file")TempFile tf, @Param("userId")int id,AdaptorErrorContext err){
+        NutMap re=new NutMap();
+        String msg=null;
+        if(err!=null && err.getAdaptorErr()!=null){
+            msg="上传文件大小不符合规定";
+        }else if(tf==null){
+            msg="空文件";
+        }else {
+            User user=dao.fetch(User.class,id);
+            try {
+                BufferedImage image= Images.read(tf.getFile());
+                //缩放
+                image=Images.zoomScale(image,128,128, Color.WHITE);
+                ByteArrayOutputStream out =new ByteArrayOutputStream();
+                /**
+                 * quality:图片输出质量
+                 */
+                Images.writeJpeg(image,out,0.9f);
+                user.setAvatar(out.toByteArray());
+                dao.update(user,"^avatar$");
+            } catch (DaoException e) {
+                msg="系统错误";
+            } catch (Throwable e){
+                msg="图片格式错误";
+            }
+        }
+        if(msg!=null) Mvcs.getHttpSession().setAttribute("upload-error-msg",msg);
+        return re.setv("ok",true).setv("msg",msg);
+    }
+
+
+    public Object readAvatar(@Param("user")int id, HttpServletRequest req)throws SQLException{
+        User user= Daos.ext(dao, FieldFilter.create(User.class,"^avatar$")).fetch(User.class,id);
+        if(user==null || user.getAvatar()==null){
+            return new File(req.getSession().getServletContext().getRealPath("/rs/user_avatar/none.jpg"));
+        }
+        return user.getAvatar();
     }
 }
