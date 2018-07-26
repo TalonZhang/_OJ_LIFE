@@ -19,10 +19,8 @@ import java.util.Date;
  * Created by likole on 7/24/18.
  */
 @IocBean
-//@Filters(@By(type = CheckSession.class, args = {"state0", "/"}))
-//todo:去掉注释
+@Filters(@By(type = CheckSession.class, args = {"state0", "/"}))
 @At("tutorial")
-@Ok("json:full")
 public class TutorialModule {
 
     @Inject

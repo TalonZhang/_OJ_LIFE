@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
         "*tx", // 事务拦截 aop
         "*async"}) // 异步执行aop
 @Modules()
+@Ok("json:full")
 @Fail("jsp:jsp.500")
 @Filters(@By(type = CrossOriginFilter.class))
 public class MainModule {

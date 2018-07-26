@@ -1,13 +1,11 @@
 package cn.likole.oj.bean;
 
-import org.nutz.dao.entity.annotation.ColDefine;
-import org.nutz.dao.entity.annotation.ColType;
-import org.nutz.dao.entity.annotation.Column;
-import org.nutz.dao.entity.annotation.Id;
+import org.nutz.dao.entity.annotation.*;
 
 /**
  * Created by likole on 7/26/18.
  */
+@Table("source_code")
 public class SourceCode {
 
     @Id(auto = false)

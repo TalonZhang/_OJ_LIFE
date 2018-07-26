@@ -35,7 +35,6 @@ import java.util.List;
  */
 @IocBean
 @At("/user")
-@Ok("json:full")
 public class UserModule {
 
     @Inject
